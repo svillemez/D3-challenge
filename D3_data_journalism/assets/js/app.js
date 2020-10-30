@@ -14,7 +14,7 @@ function makeResponsive() {
     let width = svgWidth - margin.left - margin.right;
     let height = svgHeight - margin.top - margin.bottom;
 
-    // Create the SVG wrapper, then append the svg group with its size attributes
+    // Create the SVG wrapper, then append the svg group with size attributes
     let svg = d3.select("#scatter")
         .append("svg")
         .attr("width", svgWidth)
@@ -27,7 +27,7 @@ function makeResponsive() {
     d3.csv("assets/data/data.csv")
         .then(function(riskData) {
 
-            //Get data from data.csv file and turn strings into integers if needed
+            //Get data from data.csv file 
             riskData.forEach(function(data) {
                 data.age = +data.age;
                 data.smokes = +data.smokes;
@@ -36,7 +36,7 @@ function makeResponsive() {
                 data.abbr = data.abbr;
                 data.income = +data.income;
             });
-            //Create scales for X and Y
+            //Create scales for the X and Y axis
             let xLinearScale = d3.scaleLinear()
                 .domain([8.5, d3.max(riskData, d => d.poverty)])
                 .range([0, width]);
@@ -46,11 +46,11 @@ function makeResponsive() {
                 .range([height, 0]);
 
 
-            //Create axis
+            //Create X and Y axis
             let xAxis = d3.axisBottom(xLinearScale);
             let yAxis = d3.axisLeft(yLinearScale);
 
-            //Append axis to the chartGroup
+            //Add axis to the chartGroup
             chartGroup.append("g")
                 .attr("transform", `translate(0, ${height})`)
                 .call(xAxis);
@@ -58,7 +58,7 @@ function makeResponsive() {
             chartGroup.append("g")
                 .call(yAxis);
 
-            //Make Circles
+            //Create Circles
             let circlesGroup = chartGroup.selectAll("circle")
                 .data(riskData)
                 .enter()
@@ -87,38 +87,9 @@ function makeResponsive() {
             console.log(riskData);
 
 
-            //circlesGroup
-            //.on('mouseover', function(data) {
-            // toolTip.text(d=> d.abbr);
-
-            // })
-            // Step 3: Add an onmouseout event to make the tooltip invisible
-            //.on('mouseout', function() {
-            // toolTip.style('display', 'none');
-            // });
 
 
-
-
-
-            // var toolTip = d3
-            //.select('body')
-            //.append('div')
-            //.attr('class', 'tooltip');
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //Make labels for the healthrisk graph
+            //Label the health risk graph
 
             chartGroup.append("text")
                 .attr("transform", "rotate(-90)")
@@ -126,7 +97,7 @@ function makeResponsive() {
                 .attr("x", 0 - 250)
                 .attr("dy", "1em")
                 .attr("class", "axisText")
-                .text("Lacks Healthcare (%)");
+                .text("Lacks Health Care (%)");
 
             chartGroup.append("text")
                 .attr("transform", `translate(${width / 2.5}, ${height + margin.top + 25})`)
